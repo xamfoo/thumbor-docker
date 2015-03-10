@@ -40,15 +40,36 @@ Run the image in a container:
 
     docker run -p 8888:8888 xamfoo/thumbor-docker thumbor
 
-then try a thumbor url in the host browser for example:
+then try a thumbor url in the host browser:
 
     http://localhost:8888/unsafe/x50/www.google.com/logos/logo.gif
 
+### Using your own thumbor configuration
+
+    docker run \
+      -p 8888:8888 -v <path to config file>:/etc/thumbor.conf \
+      xamfoo/thumbor-docker \
+      thumbor -c /etc/thumbor.conf -k <path to keyfile>
+
 ### Customization
 
-Modify the provided `Dockerfile` and rebuild.
+There are various ways to customize this image to your needs.
 
-Or reference to this image from another `Dockerfile` like so
+#### Modifying Dockerfile, Packages
+
+- You can update `Dockerfile` with your own instructions.
+- Add, remove, or comment out packages in `setup/requirements` to determine
+  the packages installed in the image.
+
+After modification, rebuild the image in the project root directory:
+
+    docker build -t mynamespace/thumor-docker .
+
+For more information refer to Docker documentation.
+
+#### Reference to this image from another Dockerfile
+
+Add this line to the top of your Dockerfile
 
     FROM xamfoo/thumbor-docker
 
@@ -65,4 +86,4 @@ Docker base image:
 
 Installed package:
 
-- thumbor 4.10.3
+- thumbor 4.11.1
