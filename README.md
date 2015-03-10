@@ -1,6 +1,6 @@
 # thumbor-docker
 
-Dockerfile of minimal working installation of `thumbor` on Ubuntu LTS with
+Docker repository of a working installation of `thumbor` on Ubuntu LTS with
 default configuration. Use this as a base image for further customization.
 
 ### thumbor
@@ -53,7 +53,9 @@ then try a thumbor url in the host browser:
 
 ### Customization
 
-There are various ways to customize this image to your needs.
+There are various ways to customize this image to your needs. You might need to
+refer to [phusion/baseimage](https://github.com/phusion/baseimage-docker) and
+[docker](https://docs.docker.com/) documentation.
 
 #### Modifying Dockerfile, Packages
 
@@ -65,20 +67,13 @@ After modification, rebuild the image in the project root directory:
 
     docker build -t mynamespace/thumor-docker .
 
-For more information refer to Docker documentation.
-
 #### Reference to this image from another Dockerfile
 
 Add this line to the top of your Dockerfile
 
     FROM xamfoo/thumbor-docker
 
-For more information refer to Docker documentation.
-
 ## Dependencies
-
-All packages in `Dockerfile` are version-specified so each build is
-reproducible.
 
 Docker base image:
 
