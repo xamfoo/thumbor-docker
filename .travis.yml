@@ -1,0 +1,41 @@
+language: python
+python:
+    - "2.7_with_system_site_packages"
+    - "3.2"
+
+matrix:
+    fast_finish: true
+    allow_failures:
+        - python: "3.2"
+
+install:
+    #removing unwanted packages
+    - sudo apt-get remove --purge -y $(< unwanted_packages)
+    # update aptitude
+    - sudo apt-get update -y
+    - sudo apt-get install aptitude -y
+
+    # install aptitude packages
+    - LDFLAGS=-lm sudo aptitude install -y $(< requirements)
+
+    - sudo apt-get autoremove -y
+
+    - df -h
+
+    # ffmpeg
+    - wget http://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2
+    - tar xjvf ffmpeg-snapshot.tar.bz2
+    - cd ffmpeg && ./configure --enable-gpl --enable-libx264 --enable-libvpx && make && sudo make install && cd ..
+
+    # webp - compiling from source
+    - wget "https://webp.googlecode.com/files/libwebp-0.4.0.tar.gz" -O libwebp-0.4.0.tar.gz
+    - tar xvzf libwebp-0.4.0.tar.gz
+    - cd libwebp-0.4.0 && ./configure --enable-libwebpmux --enable-libwebpdemux --enable-libwebpdecoder && make && sudo make install; cd ..
+    - sudo ldconfig
+
+    # install python requirements
+    - make setup
+
+script:
+    # finally run tests
+    - make ci_test
