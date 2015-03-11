@@ -6,11 +6,15 @@ cd "/setup"
 
 _install() {
   apt-get update
+  # Install thumbor requirements
   apt-get install \
     --no-install-recommends --ignore-missing --fix-broken -y \
       $(cat requirements | grep -v "#")
-  # Clean up APT when done
-  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+  # Install build dependencies
+  apt-get install \
+    --no-install-recommends --ignore-missing --fix-broken -y \
+    python-pip
 }
 
 if [ -e "requirements" ]; then
@@ -21,7 +25,11 @@ else
   _install
 fi
 
-python setup.py install
+## Install thumbor
+pip install .
+
+# Clean up APT when done
+apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 cd ".."
 rm -rf "thumbor"
