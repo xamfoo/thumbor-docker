@@ -1,7 +1,8 @@
 # thumbor-docker
 
-Docker repository of a working installation of `thumbor` on Ubuntu LTS with
-default configuration. Use this as a base image for further customization.
+Docker repository of a minimal working installation of thumbor on Ubuntu LTS
+14.04 with default configuration. Use this as a base image for further
+customization.
 
 ### thumbor
 
